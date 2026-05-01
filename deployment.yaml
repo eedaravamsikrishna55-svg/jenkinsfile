@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fastapidemo
+  name: fastapidemo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fastapidemo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fastapidemo
+    spec:
+      containers:
+      - image: narsimha2580/test:10
+        name: fastapidemo
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+  labels:
+    app: lb-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: fastapidemo
